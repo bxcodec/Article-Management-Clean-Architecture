@@ -39,12 +39,12 @@ func (m *mysqlArticleRepository) fetch(query string, args ...interface{}) ([]*mo
 	return result, nil
 }
 
-func (m *mysqlArticleRepository) Fetch() ([]*models.Article, error) {
+func (m *mysqlArticleRepository) Fetch(cursor string, num int64) ([]*models.Article, error) {
 
 	query := `SELECT id,title,content,updated_at, created_at
-  						FROM article`
+  						FROM article WHERE ID > ? LIMIT ?`
 
-	return m.fetch(query)
+	return m.fetch(query, cursor, num)
 
 }
 
